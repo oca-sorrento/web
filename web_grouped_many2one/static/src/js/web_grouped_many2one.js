@@ -7,22 +7,11 @@ var data = require('web.data');
 
 var FieldMany2One = core.form_widget_registry.get('many2one');
 
+//TODO: Can be the same widget but reacts to an option.
 var FieldGroupedMany2One = FieldMany2One.extend({
-    render_editable: function() { 
-        var self = this;
-        this._super.apply(this, arguments);
-        
-        this.$input.autocomplete({
-            source: function(req, resp) {
-                self.get_search_result(req.term).done(function(result) {
-                    resp(result);
-                });
-            },
-        });
-    },
     get_search_result: function() {
         var self = this;
-        var group_by = 'country_id'; //for testing perposes
+        var group_by = this.options.group_by; //for testing perposes
         var result = this._super.apply(this, arguments);
         return result.then(function(d) {
             //Get group by field values
@@ -46,10 +35,11 @@ var FieldGroupedMany2One = FieldMany2One.extend({
                 //For each group add the group and the records of it
                 for (var group in groups) {
                     items.push({
-                        label: '<b>' + group + '</b>',
+                        label: group,
                         value: group,
                         name: group,
-                        id: null
+                        id: null,
+                        classname: 'o_grouped_many2one_group'
                     });
                     for (var i in groups[group]) {
                         //Find the already fetched name of the record
@@ -62,6 +52,9 @@ var FieldGroupedMany2One = FieldMany2One.extend({
                         });
                     }
                 }
+                //Add 'Search More' and 'Create and Edit' buttons
+                items.push(d[d.length-2]);
+                items.push(d[d.length-1]);
                 return items;
             });
             

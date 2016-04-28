@@ -3,6 +3,8 @@
     <template name="Web Grouped Many2one Assets" id="web_grouped_many2one_assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script src="/web_grouped_many2one/static/src/js/web_grouped_many2one.js"></script>
+            
+            <link href="/web_grouped_many2one/static/src/css/web_grouped_many2one.css" type="text/css" rel="stylesheet" />
         </xpath>
     </template>
 </odoo>
