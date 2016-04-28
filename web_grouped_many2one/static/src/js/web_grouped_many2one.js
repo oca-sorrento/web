@@ -7,12 +7,12 @@ var data = require('web.data');
 
 var FieldMany2One = core.form_widget_registry.get('many2one');
 
-//TODO: Can be the same widget but reacts to an option.
-var FieldGroupedMany2One = FieldMany2One.extend({
+FieldMany2One.include({
     get_search_result: function() {
         var self = this;
-        var group_by = this.options.group_by; //for testing perposes
+        var group_by = this.options.group_by;
         var result = this._super.apply(this, arguments);
+        if (typeof this.options.group_by == 'undefined') return result;
         return result.then(function(d) {
             //Get group by field values
             var dataset = new data.DataSet(self, self.field.relation, self.build_context());
@@ -62,5 +62,5 @@ var FieldGroupedMany2One = FieldMany2One.extend({
     }
 });
 
-core.form_widget_registry.add('grouped_many2one', FieldGroupedMany2One)
+//core.form_widget_registry.add('grouped_many2one', FieldGroupedMany2One)
 });
