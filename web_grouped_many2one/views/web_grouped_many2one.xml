@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template name="Web Grouped Many2one Assets" id="web_grouped_many2one_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script src="/web_grouped_many2one/static/src/js/web_grouped_many2one.js"></script>
+        </xpath>
+    </template>
+</odoo>
